@@ -1,3 +1,4 @@
+#!/bin/bash
 # GenerArte
 # Generador de ISO personalizada
 # Contiene archivos en carpetas que serán llamadas por el "generador".
