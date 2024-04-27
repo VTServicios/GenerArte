@@ -240,6 +240,8 @@ apt update --yes
 apt install --yes \
 	firmware-linux-nonfree \
 	firmware-misc-nonfree \
+	firmware-realtek \
+	firmware-iwlwifi\
 	firmware-amd-graphics \
 	amd64-microcode \
 	intel-microcode
