@@ -72,7 +72,7 @@ prepare() {
 	else 
 		echo -e "$yel* $CACHE does not exist, running debootstrap...$off"
 		sleep 2
-		# Legacy needs: syslinux, syslinux-common, isolinux, memtest86+
+		# Legacy necesita: syslinux, syslinux-common, isolinux, memtest86+
 		apt-get install debootstrap squashfs-tools grub-pc-bin \
 			grub-efi-amd64-signed shim-signed mtools xorriso \
 			syslinux syslinux-common isolinux memtest86+
@@ -154,7 +154,7 @@ script_build() {
 # Configurar entorno no interactivo
 export DEBIAN_FRONTEND=noninteractive
 
-# Instalar paquetes necesarios
+# Instalar paquetes necesarios (quitamos lightdm-gtk-greeter)
 apt install --no-install-recommends --yes \
 	\
 	linux-image-$KERN live-boot systemd-sysv firmware-linux-free sudo \
@@ -162,7 +162,7 @@ apt install --no-install-recommends --yes \
 	openssh-client openssh-server rsync less \
 	\
 	xserver-xorg x11-xserver-utils xinit \
-	lightdm lightdm-gtk-greeter \
+	lightdm \
 	plymouth plymouth-themes compton dbus-x11 libnotify-bin \
 	gir1.2-notify-0.7 \
 	\
@@ -182,7 +182,7 @@ apt install --no-install-recommends --yes \
 	acpi acpid powertop tlp $PKGS
 
 # Modify /etc/issue banner
-perl -p -i -e 's/^D/Argux Rescue $VER\nBased on D/' /etc/issue
+perl -p -i -e 's/^D/Argux Rescue $VER\nBasado en D/' /etc/issue
 
 # Set vi editor preferences
 perl -p -i -e 's/^set compatible$/set nocompatible/g' /etc/vim/vimrc.tiny
@@ -257,7 +257,6 @@ echo "Adding non-free packages..."
 # Briefly activate repos to install non-free firmware packages
 perl -p -i -e 's/main$/main non-free non-free-firmware/' /etc/apt/sources.list
 apt update --yes
-# WARNING: Wireless connections are NOT recommended for backup/restore!
 #
 # To include firmware, uncomment or add packages as needed here in the
 # make script to create a custom image.
