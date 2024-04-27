@@ -16,7 +16,7 @@ off='\e[0m'
 
 # Show title
 echo -e "\n$off---------------------------"
-echo -e "$wht  ARGUX RESCUE ISO CREATOR$off"
+echo -e "$wht  ARGUX RESCUE ISO $off"
 echo -e "       Version $VER"
 echo -e "---------------------------\n"
 
@@ -228,18 +228,8 @@ EOL
 
 script_add_nonfree() {
 	#
-	# Setup script: Install non-free packages for hardware support
-	#
-	# Non-free firmware does not comply with the Debian DFSG and is
-	# not included in official releases.  For more information, see
-	# <https://www.debian.org/social_contract> and also
-	# <http://wiki.debian.org/Firmware>.
-	#
-	# WARNING: Wireless connections are *NOT* recommended for backup
-	# and restore operations, but are included for other uses.
-	#
 	cat >> $ROOT/$FILE <<EOL
-echo "Adding non-free packages..."
+echo "Agregando non-free packages..."
 # Briefly activate repos to install non-free firmware packages
 perl -p -i -e 's/main$/main non-free non-free-firmware/' /etc/apt/sources.list
 apt update --yes
