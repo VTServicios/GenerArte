@@ -487,7 +487,6 @@ create_uefi_iso() {
 	echo "Listo."
 	echo
 }
-# ----------------------------QUINIENTOS-----------
 # Ejecutar según los modificadores
 #
 if [ "$EJECUTAR" == "limpiar" ]; then
@@ -524,7 +523,7 @@ if [ "$EJECUTAR" == "cambios" ]; then
 fi
 
 if [ "$EJECUTAR" == "boot" ]; then
-	# Rebuild existing ISO image (update bootloader)
+	# ReGenerando ISO image existente (update bootloader)
 	create_iso
 fi
 # --------FIN
