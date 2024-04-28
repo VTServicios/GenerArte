@@ -167,14 +167,24 @@ apt install --no-install-recommends --yes \
 	wireless-tools wpasupplicant iw rfkill \
 	acpi acpid powertop tlp $PKGS
 
-# Modify /etc/issue banner
+# Modificar el cartel en  /etc/issue
 perl -p -i -e 's/^D/Argux Rescue $VER\nBasado en D/' /etc/issue
 
-# Set vi editor preferences
+# Setear editor vi (preferencias)
 perl -p -i -e 's/^set compatible$/set nocompatible/g' /etc/vim/vimrc.tiny
 
 # Use local RTC in Linux (via /etc/adjtime) and disable network time updates
 systemctl disable systemd-timesyncd.service
+
+# Instalar locales y reconfigurarlo
+apt install locales
+update-locale "LANG=es_AR.UTF-8"
+locale-gen --purge "es_AR.UTF-8"
+dpkg-reconfigure --frontend noninteractive locales
+
+# set up lightdm autologin
+sed -i 's/^#autologin-user=.*/autologin-user=argux/' /etc/lightdm/lightdm.conf
+sed -i 's/^#autologin-user-timeout=.*/autologin-user-timeout=0/' /etc/lightdm/lightdm.conf
 
 # Disable SSH server and delete keys
 systemctl disable ssh
