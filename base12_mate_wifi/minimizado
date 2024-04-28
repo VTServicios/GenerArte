@@ -97,7 +97,7 @@ ff02::1		ip6-allnodes
 ff02::2		ip6-allrouters
 END
 
-# Set default locale
+# Aquí habría que setear el default locale -> reemplazar por Argux nativo
 cat >> /etc/bash.bashrc <<END
 export LANG="C"
 export LC_ALL="C"
@@ -173,22 +173,22 @@ perl -p -i -e 's/^D/Argux Rescue $VER\nBasado en D/' /etc/issue
 # Setear editor vi (preferencias)
 perl -p -i -e 's/^set compatible$/set nocompatible/g' /etc/vim/vimrc.tiny
 
-# Use local RTC in Linux (via /etc/adjtime) and disable network time updates
+# Usar local RTC en Linux (via /etc/adjtime) y deshabilitar network time updates
 systemctl disable systemd-timesyncd.service
 
 # Acomodar locales y reconfigurarlo
 dpkg-reconfigure -p high locales
 update-locale LANG=es_AR.UTF-8
 
-# set up lightdm autologin
+# Setear lightdm autologin
 sed -i 's/^#autologin-user=.*/autologin-user=argux/' /etc/lightdm/lightdm.conf
 sed -i 's/^#autologin-user-timeout=.*/autologin-user-timeout=0/' /etc/lightdm/lightdm.conf
 
-# Disable SSH server and delete keys
+# Desactivar SSH server y deletear llaves (keys)
 systemctl disable ssh
 rm -f /etc/ssh/ssh_host_*
 
-# Prevent chromium "save password" prompts
+# Prevenir chromium "save password" prompts
 mkdir -p /etc/chromium/policies/managed
 cat > /etc/chromium/policies/managed/no-password-management.json <<END
 {
@@ -197,19 +197,19 @@ cat > /etc/chromium/policies/managed/no-password-management.json <<END
 }
 END
 
-# Add regular user
+# Agregar usuario a sudo
 useradd --create-home $USER --shell /bin/bash
 adduser $USER sudo
 echo '$USER:$USER' | chpasswd
 
-# Prepare single-user system
+# Preparar sistema para un usuario 
 echo 'root:$USER' | chpasswd
 echo 'default_user root' >> /etc/slim.conf
 echo 'auto_login yes' >> /etc/slim.conf
-echo "Setting default plymouth theme..."
+echo "Seteando el tema default plymouth..."
 plymouth-set-default-theme -R argux
 update-initramfs -u
-ln -s /usr/bin/pcmanfm /usr/bin/nautilus
+### ln -s /usr/bin/pcmanfm /usr/bin/nautilus
 
 # Configure nginx/php-fpm application server
 perl -p -i -e 's/^user = .*$/user = root/g' /etc/php/$PHPV/fpm/pool.d/www.conf
