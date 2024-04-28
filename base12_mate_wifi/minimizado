@@ -148,7 +148,7 @@ apt install --no-install-recommends --yes \
 	openssh-client openssh-server rsync less \
 	\
 	xserver-xorg x11-xserver-utils xinit \
-	lightdm locales \
+	lightdm locales locales-all \
 	plymouth plymouth-themes compton dbus-x11 libnotify-bin \
 	gir1.2-notify-0.7 \
 	\
@@ -177,9 +177,8 @@ perl -p -i -e 's/^set compatible$/set nocompatible/g' /etc/vim/vimrc.tiny
 systemctl disable systemd-timesyncd.service
 
 # Acomodar locales y reconfigurarlo
-update-locale "LANG=es_AR.UTF-8"
-locale-gen --purge "es_AR.UTF-8"
-dpkg-reconfigure --frontend noninteractive locales
+dpkg-reconfigure -p high locales
+update-locale LANG=es_AR.UTF-8
 
 # set up lightdm autologin
 sed -i 's/^#autologin-user=.*/autologin-user=argux/' /etc/lightdm/lightdm.conf
