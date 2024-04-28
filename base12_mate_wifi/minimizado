@@ -255,7 +255,7 @@ script_shell() {
 	# Setup script: Insert command to open shell for making changes
 	#
 	cat >> $ROOT/$FILE << EOL
-echo -e "$red>>> Opening interactive shell. Type 'exit' when done making changes.$off"
+echo -e "$red>>> Shell interactivo. Tipear 'exit' al finalizar los cambios.$off"
 echo
 bash
 EOL
@@ -302,12 +302,12 @@ chroot_exec() {
 	# Run setup script inside chroot
 	chmod +x $ROOT/$FILE
 	echo
-	echo -e "$red>>> ENTERING CHROOT SYSTEM$off"
+	echo -e "$red>>> ENTRANDO EN MODO CHROOT $off"
 	echo
 	sleep 2
 	chroot $ROOT/ /bin/bash -c "./$FILE"
 	echo
-	echo -e "$red>>> EXITED CHROOT SYSTEM$off"
+	echo -e "$red>>> SALIENDO DEL MODO CHROOT $off"
 	echo
 	sleep 2
 	rm -f $ROOT/$FILE
