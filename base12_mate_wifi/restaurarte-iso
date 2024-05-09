@@ -159,7 +159,7 @@ apt install --no-install-recommends --yes \
 	gir1.2-notify-0.7 \
 	\
 	mate-desktop-environment-core mate-desktop-environment-extras \
-	caja mate-terminal pluma eog \
+	caja mate-terminal pluma eog chntpw \
 	\
 	beep laptop-detect os-prober discover lshw-gtk hdparm smartmontools \
 	nmap time lvm2 gparted gnome-disk-utility baobab gddrescue testdisk \
