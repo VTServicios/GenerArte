@@ -37,10 +37,10 @@ ACTION=$1
 
 clean() {
 	#
-	# Remove all build files
+	# Limpia los archivos de creación
 	#
 	rm -rf {image,scratch,$ROOT,*.iso}
-	echo -e "$yel* All clean!$off\n"
+	echo -e "$yel* Todo limpio!$off\n"
 	exit
 }
 
@@ -48,15 +48,15 @@ prepare() {
 	#
 	# Prepare host environment
 	#
-	echo -e "$yel* Building from scratch.$off"
+	echo -e "$yel* Construyendo desde cero.$off"
 	rm -rf {image,scratch,$ROOT,*.iso}
 	CACHE=debootstrap-$BASE-$ARCH.tar.gz
 	if [ -f "$CACHE" ]; then
-		echo -e "$yel* $CACHE exists, extracting existing archive...$off"
+		echo -e "$yel* $CACHE existe, extrayendo existing archive...$off"
 		sleep 2
 		tar zxvf $CACHE
 	else 
-		echo -e "$yel* $CACHE does not exist, running debootstrap...$off"
+		echo -e "$yel* $CACHE no existe, running debootstrap...$off"
 		sleep 2
 		# Legacy necesita: syslinux, syslinux-common, isolinux, memtest86+
 		apt-get install debootstrap squashfs-tools grub-pc-bin \
@@ -74,7 +74,7 @@ prepare() {
 
 script_init() {
 	#
-	# Setup script: Base configuration
+	# Setup script: Base
 	#
 	cat > $ROOT/$FILE <<EOL
 #!/bin/bash
@@ -102,6 +102,12 @@ cat >> /etc/bash.bashrc <<END
 export LANG="C"
 export LC_ALL="C"
 END
+
+# Configurar región y lenguaje
+echo "es_AR.UTF-8 UTF-8" > /etc/locale.gen
+locale-gen
+dpkg-reconfigure -p high locales
+update-locale LANG=es_AR.UTF-8
 
 # Export environment
 export HOME=/root; export LANG=C; export LC_ALL=C;
@@ -231,6 +237,12 @@ server {
 END
 rm -f /etc/nginx/sites-enabled/default
 ln -s /etc/nginx/sites-available/argux /etc/nginx/sites-enabled/
+
+# Configurar teclado español
+export KBD_CODE="es-latam"
+export KBD_MODEL="pc105"
+export KBD_LAYOUT="qwerty"
+
 EOL
 }
 
