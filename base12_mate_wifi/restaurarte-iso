@@ -109,7 +109,7 @@ locale-gen
 dpkg-reconfigure -p high locales
 update-locale LANG=es_AR.UTF-8
 
-# Export environment
+# Exportar environment
 export HOME=/root; export LANG=C; export LC_ALL=C;
 
 EOL
@@ -314,7 +314,7 @@ chroot_exec() {
 	# Execute setup script inside chroot environment
 	#
 	echo -e "$yel* Copying assets to root directory...$off"
-	# Copy assets before configuring plymouth theme
+	# Copy assets antes de configurar el thema plymouth
 	rsync -h --info=progress2 --archive \
 		./overlay/$ROOT/usr/share/* \
 		./$ROOT/usr/share/
@@ -346,7 +346,7 @@ create_livefs() {
 	mkdir -p image/live
 
 	# Apply changes from overlay
-	echo -e "$yel* Applying changes from overlay...$off"
+	echo -e "$yel* Aplicando cambios desde overlay...$off"
 	rsync -h --info=progress2 --archive \
 		./overlay/* \
 		.
@@ -450,7 +450,7 @@ create_uefi_iso() {
 	fi
 
 	# Apply image changes from overlay
-	echo -e "$yel* Applying image changes from overlay...$off"
+	echo -e "$yel* Aplicando cambios en la imagen desde overlay...$off"
 	rsync -h --info=progress2 --archive \
 		./overlay/image/* \
 		./image/
@@ -526,7 +526,6 @@ create_uefi_iso() {
 	echo "Done."
 	echo
 }
-
 
 #
 # Execute functions based on the requested action
