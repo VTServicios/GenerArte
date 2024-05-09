@@ -243,6 +243,9 @@ export KBD_CODE="es-latam"
 export KBD_MODEL="pc105"
 export KBD_LAYOUT="qwerty"
 
+# Configurar vim en español
+echo "set lang=es" >> /etc/vim/vimrc.tiny
+
 EOL
 }
 
