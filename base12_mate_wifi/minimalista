@@ -1,7 +1,7 @@
 #!/bin/bash
 #
-VER=10
-BASE=buster
+VER=12
+BASE=bookworm
 ARCH=amd64
 ROOT=rootdir
 FILE=setup.sh
@@ -10,13 +10,13 @@ NONFREE=true
 
 # Setear colores
 rojo='\e[1;31m'
-wht='\e[1;37m'
-yel='\e[1;33m'
+blanco='\e[1;37m'
+blanco='\e[1;33m'
 off='\e[0m'
 
 # Cartel principal
 echo -e "\n$off---------------------------"
-echo -e "$wht  Restaurarte ARGUX ISO $off"
+echo -e "$blanco  Restaurarte ARGUX ISO $off"
 echo -e "       Version $VER"
 echo -e "---------------------------\n"
 
@@ -40,7 +40,7 @@ clean() {
 	# Limpia los archivos de creación
 	#
 	rm -rf {image,scratch,$ROOT,*.iso}
-	echo -e "$yel* Todo limpio!$off\n"
+	echo -e "$blanco* Todo limpio!$off\n"
 	exit
 }
 
@@ -48,15 +48,15 @@ prepare() {
 	#
 	# Prepare host environment
 	#
-	echo -e "$yel* Construyendo desde cero.$off"
+	echo -e "$blanco* Construyendo desde cero.$off"
 	rm -rf {image,scratch,$ROOT,*.iso}
 	CACHE=debootstrap-$BASE-$ARCH.tar.gz
 	if [ -f "$CACHE" ]; then
-		echo -e "$yel* $CACHE existe, extrayendo existing archive...$off"
+		echo -e "$blanco* $CACHE existe, extrayendo existing archive...$off"
 		sleep 2
 		tar zxvf $CACHE
 	else 
-		echo -e "$yel* $CACHE no existe, running debootstrap...$off"
+		echo -e "$blanco* $CACHE no existe, running debootstrap...$off"
 		sleep 2
 		# Legacy necesita: syslinux, syslinux-common, isolinux, memtest86+
 		apt-get install debootstrap squashfs-tools grub-pc-bin \
@@ -117,7 +117,7 @@ EOL
 
 script_build() {
 	#
-	# Setup script: Install packages
+	# Setup script: Instala paquetes
 	#
 	if [ "$ARCH" == "i386" ]; then
 		KERN="686"
@@ -168,7 +168,7 @@ apt install --no-install-recommends --yes \
 	smbclient cifs-utils nfs-common sshfs partclone pigz yad f2fs-tools \
 	exfat-fuse btrfs-progs \
 	\
-	nginx php-fpm php-cli chromium \
+	nginx php-fpm php-cli chromium chromium-browser-l10n \
 	\
 	network-manager network-manager-gnome \
 	wireless-tools wpasupplicant iw rfkill \
@@ -314,7 +314,7 @@ chroot_exec() {
 	#
 	# Execute setup script inside chroot environment
 	#
-	echo -e "$yel* Copying assets to root directory...$off"
+	echo -e "$blanco* Copying assets to root directory...$off"
 	# Copy assets antes de configurar el thema plymouth
 	rsync -h --info=progress2 --archive \
 		./overlay/$ROOT/usr/share/* \
@@ -341,13 +341,13 @@ create_livefs() {
 	#
 	# Prepare to create new image
 	#
-	echo -e "$yel* Preparing image...$off"
+	echo -e "$blanco* Preparing image...$off"
 	rm -f $ROOT/root/.bash_history
 	rm -rf image argux-$VER.iso
 	mkdir -p image/live
 
 	# Apply changes from overlay
-	echo -e "$yel* Aplicando cambios desde overlay...$off"
+	echo -e "$blanco* Aplicando cambios desde overlay...$off"
 	rsync -h --info=progress2 --archive \
 		./overlay/* \
 		.
@@ -364,7 +364,7 @@ create_livefs() {
 	echo $VER > $ROOT/var/www/html/VERSION
 
 	# Compress live filesystem
-	echo -e "$yel* Compressing live filesystem...$off"
+	echo -e "$blanco* Compressing live filesystem...$off"
 	mksquashfs $ROOT/ image/live/filesystem.squashfs -e boot
 }
 
@@ -391,7 +391,7 @@ create_legacy_iso() {
 	fi
 
 	# Apply image changes from overlay
-	echo -e "$yel* Applying image changes from overlay...$off"
+	echo -e "$blanco* Applying image changes from overlay...$off"
 	rsync -h --info=progress2 --archive \
 		./overlay/image/* \
 		./image/
@@ -403,7 +403,7 @@ create_legacy_iso() {
 	perl -p -i -e "s/\\\$VERSION/$VER/g" image/isolinux/isolinux.cfg
 	
 	# Prepare image
-	echo -e "$yel* Preparing legacy image...$off"
+	echo -e "$blanco* Preparing legacy image...$off"
 	mkdir image/isolinux
 	cp $ROOT/boot/vmlinuz* image/live/vmlinuz
 	cp $ROOT/boot/initrd* image/live/initrd
@@ -420,7 +420,7 @@ create_legacy_iso() {
 	cp /usr/share/misc/pci.ids image/isolinux/
 
 	# Create ISO image
-	echo -e "$yel* Creating legacy ISO image...$off"
+	echo -e "$blanco* Creating legacy ISO image...$off"
 	xorriso -as mkisofs -r \
 		-J -joliet-long \
 		-isohybrid-mbr /usr/lib/ISOLINUX/isohdpfx.bin \
@@ -433,7 +433,7 @@ create_legacy_iso() {
 		image
 
 	# Report final ISO size
-	echo -e "$yel\nISO image saved:"
+	echo -e "$blanco\nISO image saved:"
 	du -sh argux-$VER.iso
 	echo -e "$off"
 	echo
@@ -451,7 +451,7 @@ create_uefi_iso() {
 	fi
 
 	# Apply image changes from overlay
-	echo -e "$yel* Aplicando cambios en la imagen desde overlay...$off"
+	echo -e "$blanco* Aplicando cambios en la imagen desde overlay...$off"
 	rsync -h --info=progress2 --archive \
 		./overlay/image/* \
 		./image/
@@ -520,7 +520,7 @@ create_uefi_iso() {
 	rm -rf scratch
 
 	# Report final ISO size
-	echo -e "$yel\nISO image saved:"
+	echo -e "$blanco\nISO image saved:"
 	du -sh argux-$VER.iso
 	echo -e "$off"
 	echo
@@ -543,10 +543,10 @@ if [ "$ACTION" == "" ]; then
 	script_init
 	script_build
 	if [ "$NONFREE" = true ]; then
-		echo -e "$yel* Including non-free packages...$off"
+		echo -e "$blanco* Including non-free packages...$off"
 		script_add_nonfree
 	else
-		echo -e "$yel* Excluding non-free packages.$off"
+		echo -e "$blanco* Excluding non-free packages.$off"
 	fi
 	script_exit
 	chroot_exec
@@ -556,7 +556,7 @@ fi
 
 if [ "$ACTION" == "changes" ]; then
 	# Enter existing system to make changes
-	echo -e "$yel* Updating existing image.$off"
+	echo -e "$blanco* Updating existing image.$off"
 	script_init
 	script_shell
 	script_exit
