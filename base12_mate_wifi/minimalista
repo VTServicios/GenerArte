@@ -147,7 +147,7 @@ script_build() {
 export DEBIAN_FRONTEND=noninteractive
 
 # Instalar paquetes necesarios (quitamos lightdm-gtk-greeter)
-# También quitamos: 1- vim-tiny
+# También quitamos: 1- vim-tiny 2- plymouth plymouth-themes
 apt install --no-install-recommends --yes \
 	\
 	linux-image-$KERN live-boot systemd-sysv firmware-linux-free sudo \
@@ -156,7 +156,7 @@ apt install --no-install-recommends --yes \
 	\
 	xserver-xorg x11-xserver-utils xinit \
 	lightdm locales locales-all nano \
-	plymouth plymouth-themes compton dbus-x11 libnotify-bin \
+	compton dbus-x11 libnotify-bin \
 	gir1.2-notify-0.7 \
 	\
 	mate-desktop-environment-core mate-desktop-environment-extras \
@@ -213,8 +213,8 @@ echo '$USER:$USER' | chpasswd
 echo 'root:$USER' | chpasswd
 echo 'default_user root' >> /etc/slim.conf
 echo 'auto_login yes' >> /etc/slim.conf
-echo "Seteando el tema default plymouth..."
-plymouth-set-default-theme -R argux
+# echo "Seteando el tema default plymouth..."
+# plymouth-set-default-theme -R argux
 update-initramfs -u
 ### ln -s /usr/bin/pcmanfm /usr/bin/nautilus
 
