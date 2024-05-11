@@ -9,7 +9,7 @@ USER=argux
 NONFREE=true
 
 # Setear colores
-red='\e[1;31m'
+rojo='\e[1;31m'
 wht='\e[1;37m'
 yel='\e[1;33m'
 off='\e[0m'
@@ -22,13 +22,13 @@ echo -e "---------------------------\n"
 
 # Chequeo: Necesita root
 if [ "$EUID" -ne 0 ]
-	then echo -e "$red* ERROR: Ejecutar como root.$off\n"
+	then echo -e "$rojo* ERROR: Ejecutar como root.$off\n"
 	exit
 fi
 
 # Check: No spaces in cwd
 if [[ `pwd` == *" "* ]]
-	then echo -e "$red* ERROR: Current absolute pathname contains a space.$off\n"
+	then echo -e "$rojo* ERROR: Current absolute pathname contains a space.$off\n"
 	exit
 fi
 
@@ -279,7 +279,7 @@ script_shell() {
 	# Setup script: Insert command to open shell for making changes
 	#
 	cat >> $ROOT/$FILE << EOL
-echo -e "$red>>> Shell interactivo. Tipear 'exit' al finalizar los cambios.$off"
+echo -e "$rojo>>> Shell interactivo. Tipear 'exit' al finalizar los cambios.$off"
 echo
 bash
 EOL
@@ -326,12 +326,12 @@ chroot_exec() {
 	# Run setup script inside chroot
 	chmod +x $ROOT/$FILE
 	echo
-	echo -e "$red>>> ENTRANDO EN MODO CHROOT $off"
+	echo -e "$rojo>>> ENTRANDO EN MODO CHROOT $off"
 	echo
 	sleep 2
 	chroot $ROOT/ /bin/bash -c "./$FILE"
 	echo
-	echo -e "$red>>> SALIENDO DEL MODO CHROOT $off"
+	echo -e "$rojo>>> SALIENDO DEL MODO CHROOT $off"
 	echo
 	sleep 2
 	rm -f $ROOT/$FILE
@@ -386,7 +386,7 @@ create_legacy_iso() {
 	# Create legacy ISO image for Debian 9 (version 2.0 releases)
 	#
 	if [ ! -s "image/live/filesystem.squashfs" ]; then
-		echo -e "$red* ERROR: The squashfs live filesystem is missing.$off\n"
+		echo -e "$rojo* ERROR: The squashfs live filesystem is missing.$off\n"
 		exit
 	fi
 
@@ -446,7 +446,7 @@ create_uefi_iso() {
 	# Create ISO image for Debian 10 (version 3.0 releases)
 	#
 	if [ ! -s "image/live/filesystem.squashfs" ]; then
-		echo -e "$red* ERROR: The squashfs live filesystem is missing.$off\n"
+		echo -e "$rojo* ERROR: The squashfs live filesystem is missing.$off\n"
 		exit
 	fi
 
