@@ -178,7 +178,7 @@ apt install --no-install-recommends --yes \
 perl -p -i -e 's/^D/Argux Rescue $VER\nBasado en D/' /etc/issue
 
 # Setear editor vi (preferencias)
-perl -p -i -e 's/^set compatible$/set nocompatible/g' /etc/vim/vimrc.tiny
+# perl -p -i -e 's/^set compatible$/set nocompatible/g' /etc/vim/vimrc.tiny
 
 # Usar local RTC en Linux (via /etc/adjtime) y deshabilitar network time updates
 systemctl disable systemd-timesyncd.service
@@ -245,7 +245,7 @@ export KBD_MODEL="pc105"
 export KBD_LAYOUT="qwerty"
 
 # Configurar vim en español
-echo "set lang=es" >> /etc/vim/vimrc.tiny
+# echo "set lang=es" >> /etc/vim/vimrc.tiny
 
 EOL
 }
