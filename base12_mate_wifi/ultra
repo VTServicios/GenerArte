@@ -10,8 +10,8 @@ NONFREE=true
 
 # Setear colores
 rojo='\e[1;31m'
-amarillo='\e[1;37m'
-blanco='\e[1;33m'
+blanco='\e[1;37m'
+amarillo='\e[1;33m'
 off='\e[0m'
 
 # Cartel principal
