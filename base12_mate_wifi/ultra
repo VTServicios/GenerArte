@@ -104,10 +104,10 @@ export LC_ALL="C"
 END
 
 # Configurar región y lenguaje
-echo "es_AR.UTF-8 UTF-8" > /etc/locale.gen
-locale-gen
-dpkg-reconfigure -p high locales
-update-locale LANG=es_AR.UTF-8
+#echo "es_AR.UTF-8 UTF-8" > /etc/locale.gen
+#locale-gen
+#dpkg-reconfigure -p high locales
+#update-locale LANG=es_AR.UTF-8
 
 # Exportar environment
 export HOME=/root; export LANG=C; export LC_ALL=C;
@@ -168,7 +168,7 @@ apt install --no-install-recommends --yes \
 	smbclient cifs-utils nfs-common sshfs partclone pigz yad f2fs-tools \
 	exfat-fuse btrfs-progs \
 	\
-	nginx php-fpm php-cli chromium chromium-browser-l10n \
+	nginx php-fpm php-cli chromium \
 	\
 	network-manager network-manager-gnome \
 	wireless-tools wpasupplicant iw rfkill \
@@ -240,9 +240,9 @@ rm -f /etc/nginx/sites-enabled/default
 ln -s /etc/nginx/sites-available/argux /etc/nginx/sites-enabled/
 
 # Configurar teclado español
-export KBD_CODE="es-latam"
-export KBD_MODEL="pc105"
-export KBD_LAYOUT="qwerty"
+#export KBD_CODE="es-latam"
+#export KBD_MODEL="pc105"
+#export KBD_LAYOUT="qwerty"
 
 # Configurar vim en español
 # echo "set lang=es" >> /etc/vim/vimrc.tiny
