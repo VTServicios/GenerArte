@@ -16,7 +16,7 @@ off='\e[0m'
 
 # Cartel principal
 echo -e "\n$off---------------------------"
-echo -e "$wht  Restaurarte ARGUX RESCUE ISO $off"
+echo -e "$wht  Restaurarte ARGUX ISO $off"
 echo -e "       Version $VER"
 echo -e "---------------------------\n"
 
